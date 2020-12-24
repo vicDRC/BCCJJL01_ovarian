@@ -26,36 +26,13 @@ setwd(wd)
 theme_set(theme_cowplot())
 
 # read matched data
-sce_match <- readRDS(file='data/Ascites_Tumor_Cells_Matched_for_Metabo_with_Cluster_Feb2020.rds')
-
-#----------------------------------------#
-# ---------- cluster assignment ---------#
-#----------------------------------------#
-
-# manually assigned clusters based on marker gene exploration
-# tried automated assignment: dodgy
-sce_match$cl_map <- dplyr::recode(sce_match$cl_cluster, 
-                                            '1'='T cell',
-                                            '2'='Cytotoxic T cell',
-                                            '3'='NK cell',
-                                            '4'='Tumor',
-                                            '5'='Unclassified',
-                                            '6'='pDC',
-                                            '7'='Fibroblast',
-                                            '8'='Cytotoxic T cell',
-                                            '9'='B cell',
-                                            '10'='T cell',
-                                            '11'='Macrophage',
-                                            '12'='Tumor',
-                                            '13'='Fibroblast',
-                                            '14'='Tumor'
-                                            )
+sce_match <- readRDS(file='data/Ascites_Tumor_Cells_Matched_for_Metabo_with_Cluster_Feb2020_clean.rds')
 
 
 #----------------------------------------#
 # --------- cluster and NNMT plot -------#
 #----------------------------------------#
-
+sce_match <- readRDS(file='data/Ascites_Tumor_Cells_Matched_for_Metabo_with_Cluster_Feb2020.rds')
 dset <- logcounts(sce_match)
 dset <- as.matrix(t(dset[c('AOX1', 'COL1A1', 'PTPRC', 'MYCN', 'GNLY', 'KLRB1','NNMT', 'EPCAM', 'CD8A', 'CD4', 'NKG7', 'CD3D', 'GZMA', 'RPS12'), ]))
 dset <- data.frame(dset, 

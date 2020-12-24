@@ -186,6 +186,49 @@ library(ggplot2)
 # sce_match$cl_cluster <- as.factor(igraph::membership(ccs))
 
 #table(sce_match$cl_cluster)
-#saveRDS(sce_match, file='data/Ascites_Tumor_Cells_Matched_for_Metabo_with_Cluster_Feb2020.rds')
+
+#----------------------------------------#
+# ---------- cluster assignment ---------#
+#----------------------------------------#
+
+# manually assigned clusters based on marker gene exploration
+# tried automated assignment: dodgy
+
+sce_match$cl_map <- dplyr::recode(sce_match$cl_cluster, 
+                                  '1'='T cell',
+                                  '2'='Cytotoxic T cell',
+                                  '3'='NK cell',
+                                  '4'='Tumor',
+                                  '5'='Unclassified',
+                                  '6'='pDC',
+                                  '7'='Fibroblast',
+                                  '8'='Cytotoxic T cell',
+                                  '9'='B cell',
+                                  '10'='T cell',
+                                  '11'='Macrophage',
+                                  '12'='Tumor',
+                                  '13'='Fibroblast',
+                                  '14'='Tumor'
+)
+
+
+counts <- assay(sce_match)
+pheno <- sce_match$cl_map
+pat <- sce_match$pat
+compar <- sce_match$Sample
+
+clean_sce <- SingleCellExperiment(list(counts=counts),
+                                      colData=DataFrame(phenotype=pheno,
+                                                        donor=pat,
+                                                        compartment=compar)
+)
+saveRDS(clean_sce, file='data/Ascites_Tumor_Cells_Matched_for_Metabo_with_Cluster_Feb2020_clean.rds')
+
+
+
+
+#----------------------------------------#
+# --------- cluster and NNMT plot -------#
+#----------------------------------------#
 
 
