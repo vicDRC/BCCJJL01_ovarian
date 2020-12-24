@@ -75,8 +75,8 @@ ggplot(plot_df, aes(x = ice_mean, y = norm_mean)) +
   geom_point(color=plot_df$col) +
   scale_color_manual('', values = point_cols) +
   geom_smooth(method='lm', fill = NA, color = rgb(0,0,1,0.7)) +
-  ylab(expression(Column~separation~log[10]~IC~(ICC==0.76))) +
-  xlab(expression(Iced~cells~log[10]~IC~(ICC==0.87))) +
+  ylab(expression(Column~separation~log~IC~(ICC==0.76))) +
+  xlab(expression(Iced~cells~log~IC~(ICC==0.87))) +
   annotate('text', x = -1.5, y = 1.3, label = expression(r==0.77)) +
   geom_text_repel(aes(label = name_keep), size = 3, force = 20) 
   
